@@ -2,6 +2,7 @@ package Analizador;
 
 import Lexema.Lexema;
 import MiPila.MiPila;
+import SintaxisCorrecta.SitaxisId;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class IdentSintactico {
     private LinkedList<Lexema> listaLexemas = new LinkedList<>();
     private LinkedList<MiPila> listaSintax = new LinkedList<>();
     private LinkedList<Token> listaTokens = new LinkedList<>();
+    private LinkedList<SitaxisId> listaSintaxis = new LinkedList<>();
     private int noPila;
     private String textoSalida;
 
@@ -55,6 +57,9 @@ public class IdentSintactico {
         int i = 0;
         int j = 0;
         int ciclo = 0;
+
+        int fila = 0;
+        int columna = 0;
         //se encarga de almacenar cuantas veces se ha realizado un movimiente
         int tokensRecorridos = 0;
 
@@ -97,6 +102,8 @@ public class IdentSintactico {
                 case ESCRIBIR:
                     if (listaSintax.get(j).getListaToken().peek() == miToken) {
                         cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
+                        columna = listaLexemas.get(i).getColumna();
+                        fila = listaLexemas.get(i).getFila();
                         listaSintax.get(j).getListaToken().pop();
                         i++;
                         tokensRecorridos++;
@@ -136,6 +143,9 @@ public class IdentSintactico {
                             listaSintax.get((0)).setPosicionPuntero(0);
                             listaSintax.get((0)).getListaToken().push(Token.S1);
                             System.out.println("Es un literal: " + cadenaSintaxis);
+                            listaSintaxis.add(new SitaxisId(cadenaSintaxis, fila, columna));
+                            fila = 0;
+                            columna = 0;
                             if (esCiclo) {
                                 for (int k = 0; k < ciclo; k++) {
                                     System.out.println(textoTemporal);
@@ -168,6 +178,8 @@ public class IdentSintactico {
                 case POR_CADA:
                     if (listaSintax.get(j).getListaToken().peek() == miToken) {
                         cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
+                        columna = listaLexemas.get(i).getColumna();
+                        fila = listaLexemas.get(i).getFila();
                         listaSintax.get(j).getListaToken().pop();
                         i++;
                         tokensRecorridos++;
@@ -296,6 +308,8 @@ public class IdentSintactico {
                 case SI:
                     if (listaSintax.get(j).getListaToken().peek() == miToken) {
                         cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
+                        columna = listaLexemas.get(i).getColumna();
+                        fila = listaLexemas.get(i).getFila();
                         listaSintax.get(j).getListaToken().pop();
                         i++;
                         tokensRecorridos++;
@@ -556,7 +570,13 @@ public class IdentSintactico {
 
     public void setTextoSalida(String textoSalida) {
         this.textoSalida = textoSalida;
-    } 
-    
-    
+    }
+
+    public LinkedList<SitaxisId> getListaSintaxis() {
+        return listaSintaxis;
+    }
+
+    public void setListaSintaxis(LinkedList<SitaxisId> listaSintaxis) {
+        this.listaSintaxis = listaSintaxis;
+    }
 }
