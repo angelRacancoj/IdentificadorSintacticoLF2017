@@ -1,0 +1,13 @@
+package Analizador;
+
+/**
+ *
+ * @author angelrg
+ */
+public enum Token {
+    NUMERO, VARIABLE, ESCRIBIR, SUMA, MULTIPLICACION,
+    FIN, POR_CADA, INICIAR, SI, COMILLA, ERROR,
+    VERDADERO, FALSO, ENTONCES, LITERAL,
+    IGUAL, PARENTESIS_ABIERTO, PARENTESIS_CERRADO,
+    L1, S1, P3, P2, P4, I3, I1, I4, I2, I5, O1, X1, T1, F1
+}
