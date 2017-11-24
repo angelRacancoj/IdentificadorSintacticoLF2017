@@ -9,6 +9,7 @@ import Analizador.IdentSintactico;
 import Analizador.Lexer;
 import Analizador.Token;
 import Lexema.Lexema;
+import SintaxisCorrecta.SitaxisId;
 import analizadorLexico.Archivo.ManejadorArchivo;
 import java.awt.HeadlessException;
 import java.io.File;
@@ -35,6 +36,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private List<Lexema> listaLexemas;
     private List<Lexema> listaLexemasAux;
     private ObservableList<Lexema> listaObservableLexemas;
+    private ObservableList<SitaxisId> listaObservableSintaxis;
+    private List<SitaxisId> listaSintaxis;
     private ManejadorArchivo archivos;
     private IdentSintactico identificador;
 
@@ -43,7 +46,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     public PantallaPrincipal() {
         listaLexemas = new ArrayList<>();
         listaLexemasAux = new ArrayList<>();
+        listaSintaxis = new ArrayList<>();
         listaObservableLexemas = ObservableCollections.observableList(listaLexemas);
+        listaObservableSintaxis = ObservableCollections.observableList(listaSintaxis);
         archivos = new ManejadorArchivo();
         identificador = new IdentSintactico();
         initComponents();
@@ -89,6 +94,19 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${listaObservableSintaxis}");
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable1);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${estructura}"));
+        columnBinding.setColumnName("Estructura");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${columna}"));
+        columnBinding.setColumnName("Columna");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${fila}"));
+        columnBinding.setColumnName("Fila");
+        columnBinding.setColumnClass(Integer.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
         jScrollPane1.setViewportView(jTable1);
 
         workTextArea.setColumns(20);
@@ -97,9 +115,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
         jLabel1.setText("Analisis Lexico");
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${listaObservableLexemas}");
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable2);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nombre}"));
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${listaObservableLexemas}");
+        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable2);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nombre}"));
         columnBinding.setColumnName("Nombre");
         columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tokenString}"));
@@ -259,7 +277,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         evaluarLexemas(workTextArea.getText());
         actualizarListaObservable(listaLexemasAux);
         System.out.println("errores:" + errores);
-        identificador.analizador(listaLexemasAux);
+        actualizarListaObservableSintaxis(identificador.analizador(listaLexemasAux));
 
         try {
             String nombre = "";
@@ -350,6 +368,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         this.listaObservableLexemas.clear();
         this.listaObservableLexemas.addAll(listaLexe);
     }
+    
+    public void actualizarListaObservableSintaxis(List<SintaxisCorrecta.SitaxisId> listaLexe) {
+        this.listaObservableSintaxis.clear();
+        this.listaObservableSintaxis.addAll(listaLexe);
+    }
 
     public ObservableList<Lexema> getListaObservableLexemas() {
         return listaObservableLexemas;
@@ -435,6 +458,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
+        
+        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
@@ -464,4 +489,14 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         listaObservableLexemas.clear();
         listaLexemasAux.clear();
     }
+
+    public ObservableList<SitaxisId> getListaObservableSintaxis() {
+        return listaObservableSintaxis;
+    }
+
+    public void setListaObservableSintaxis(ObservableList<SitaxisId> listaObservableSintaxis) {
+        this.listaObservableSintaxis = listaObservableSintaxis;
+    }
+    
+    
 }

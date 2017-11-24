@@ -37,7 +37,7 @@ public class IdentSintactico {
         asignacion1();
     }
 
-    public void analizador(List<Lexema> listaLexe) {
+    public List<SitaxisId> analizador(List<Lexema> listaLexe) {
         listaSintax.clear();
         listaSintax.add(new MiPila());
         listaSintax.get((0)).setPosicionPuntero(0);
@@ -49,6 +49,7 @@ public class IdentSintactico {
 
         String cadenaSintaxis = "";
         String textoTemporal = "";
+        textoSalida = "";
 
         listaLexemas.clear();
         listaLexemas.addAll(listaLexe);
@@ -149,14 +150,16 @@ public class IdentSintactico {
                             if (esCiclo) {
                                 for (int k = 0; k < ciclo; k++) {
                                     System.out.println(textoTemporal);
+                                    textoSalida = contatenarString(textoSalida, textoTemporal) + "\n";
                                 }
                             } else if (esCondicion) {
                                 if (condicionValida) {
                                     System.out.println(textoTemporal);
-                                    textoSalida = contatenarString(textoSalida, textoTemporal);
+                                    textoSalida = contatenarString(textoSalida, textoTemporal) + "\n";
                                 }
                             } else {
                                 System.out.println(textoTemporal);
+                                    textoSalida = contatenarString(textoSalida, textoTemporal) + "\n";
                             }
                             textoTemporal = "";
                             cadenaSintaxis = "";
@@ -504,7 +507,7 @@ public class IdentSintactico {
                     break;
             }
         }
-
+return listaSintaxis;
     }
 
     private void literal() {

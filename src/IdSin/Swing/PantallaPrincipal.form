@@ -209,6 +209,19 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <BindingProperties>
+            <BindingProperty name="elements" source="Form" sourcePath="${listaObservableSintaxis}" target="jTable1" targetPath="elements" updateStrategy="0" immediately="true">
+              <Subbinding sourcePath="${estructura}">
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+              </Subbinding>
+              <Subbinding sourcePath="${columna}">
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
+              </Subbinding>
+              <Subbinding sourcePath="${fila}">
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
+              </Subbinding>
+            </BindingProperty>
+          </BindingProperties>
         </Component>
       </SubComponents>
     </Container>
