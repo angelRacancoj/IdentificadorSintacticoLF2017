@@ -48,7 +48,9 @@ public class IdentSintactico {
         boolean condicionValida = false;
 
         String cadenaSintaxis = "";
+        String cadenaSintaxisCiclo = "";
         String textoTemporal = "";
+        String textoTemporalCliclo = "";
         textoSalida = "";
 
         listaLexemas.clear();
@@ -90,13 +92,11 @@ public class IdentSintactico {
                     } else if (miToken == Token.SI) {
                         eliminarPilasDiferentes(miToken);
                         tokenPila = Token.SI;
-                    } else if (miToken == Token.VARIABLE) {
-                        eliminarPilasDiferentes(miToken);
-                        tokenPila = Token.VARIABLE;
+//                    } else if (miToken == Token.VARIABLE) {
+//                        eliminarPilasDiferentes(miToken);
+//                        tokenPila = Token.VARIABLE;
                     } else {
                         tokenPila = Token.ERROR;
-                        cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
-                        i++;
                     }
                     break;
 
@@ -111,25 +111,19 @@ public class IdentSintactico {
                         tokenPila = listaSintax.get(j).getListaToken().peek();
                     } else {
                         tokenPila = Token.ERROR;
-                        cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
-                        i++;
-                        tokensRecorridos++;
                     }
                     break;
 
                 case LITERAL:
                     if (listaSintax.get(j).getListaToken().peek() == miToken) {
                         cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
-                        textoTemporal = contatenarString(textoTemporal, (listaLexemas.get(i).getNombre().replace("\"", "") + "\n"));
+                        textoTemporal = contatenarString(textoTemporal, (nombreVar.replace("\"","") + "\n"));
                         listaSintax.get(j).getListaToken().pop();
                         i++;
                         tokensRecorridos++;
                         tokenPila = listaSintax.get(j).getListaToken().peek();
                     } else {
                         tokenPila = Token.ERROR;
-                        cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
-                        i++;
-                        tokensRecorridos++;
                     }
                     break;
 
@@ -159,7 +153,7 @@ public class IdentSintactico {
                                 }
                             } else {
                                 System.out.println(textoTemporal);
-                                    textoSalida = contatenarString(textoSalida, textoTemporal) + "\n";
+                                textoSalida = contatenarString(textoSalida, textoTemporal) + "\n";
                             }
                             textoTemporal = "";
                             cadenaSintaxis = "";
@@ -171,10 +165,9 @@ public class IdentSintactico {
                         listaSintax.removeFirst();
                         tokenPila = listaSintax.get(j).getListaToken().peek();
                         i = listaSintax.get(j).getPosicionPuntero();
+                        cadenaSintaxis = "";
                     } else {
                         tokenPila = Token.ERROR;
-                        cadenaSintaxis = contatenarString(cadenaSintaxis, listaLexemas.get(i).getNombre());
-                        tokensRecorridos++;
                     }
                     break;
 
@@ -190,9 +183,6 @@ public class IdentSintactico {
                         esCiclo = true;
                     } else {
                         tokenPila = Token.ERROR;
-                        cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
-                        i++;
-                        tokensRecorridos++;
                     }
                     break;
 
@@ -206,9 +196,6 @@ public class IdentSintactico {
                         tokenPila = listaSintax.get(j).getListaToken().peek();
                     } else {
                         tokenPila = Token.ERROR;
-                        cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
-                        i++;
-                        tokensRecorridos++;
                     }
                     break;
 
@@ -221,9 +208,6 @@ public class IdentSintactico {
                         tokenPila = listaSintax.get(j).getListaToken().peek();
                     } else {
                         tokenPila = Token.ERROR;
-                        cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
-                        i++;
-                        tokensRecorridos++;
                     }
                     break;
 
@@ -241,9 +225,6 @@ public class IdentSintactico {
                         tokenPila = listaSintax.get(j).getListaToken().peek();
                     } else {
                         tokenPila = Token.ERROR;
-                        cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
-                        i++;
-                        tokensRecorridos++;
                     }
                     break;
 
@@ -264,9 +245,6 @@ public class IdentSintactico {
                         tokenPila = listaSintax.get(j).getListaToken().peek();
                     } else {
                         tokenPila = Token.ERROR;
-                        cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
-                        i++;
-                        tokensRecorridos++;
                     }
                     break;
 
@@ -279,9 +257,6 @@ public class IdentSintactico {
                         tokenPila = listaSintax.get(j).getListaToken().peek();
                     } else {
                         tokenPila = Token.ERROR;
-                        cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
-                        i++;
-                        tokensRecorridos++;
                     }
                     break;
 
@@ -302,9 +277,6 @@ public class IdentSintactico {
                         tokenPila = listaSintax.get(j).getListaToken().peek();
                     } else {
                         tokenPila = Token.ERROR;
-                        cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
-                        i++;
-                        tokensRecorridos++;
                     }
                     break;
 
@@ -320,9 +292,6 @@ public class IdentSintactico {
                         esCondicion = true;
                     } else {
                         tokenPila = Token.ERROR;
-                        cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
-                        i++;
-                        tokensRecorridos++;
                     }
                     break;
 
@@ -341,9 +310,6 @@ public class IdentSintactico {
                         tokenPila = listaSintax.get(j).getListaToken().peek();
                     } else {
                         tokenPila = Token.ERROR;
-                        cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
-                        i++;
-                        tokensRecorridos++;
                     }
                     break;
 
@@ -361,9 +327,6 @@ public class IdentSintactico {
                         tokenPila = listaSintax.get(j).getListaToken().peek();
                     } else {
                         tokenPila = Token.ERROR;
-                        cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
-                        i++;
-                        tokensRecorridos++;
                     }
                     break;
 
@@ -377,10 +340,7 @@ public class IdentSintactico {
                         tokenPila = listaSintax.get(j).getListaToken().peek();
                     } else {
                         tokenPila = Token.ERROR;
-                        cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
-                        i++;
-                        tokensRecorridos++;
-                    }
+                        }
                     break;
 
                 case I1:
@@ -393,9 +353,6 @@ public class IdentSintactico {
                         tokenPila = listaSintax.get(j).getListaToken().peek();
                     } else {
                         tokenPila = Token.ERROR;
-                        cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
-                        i++;
-                        tokensRecorridos++;
                     }
                     break;
 
@@ -408,9 +365,6 @@ public class IdentSintactico {
                         tokenPila = listaSintax.get(j).getListaToken().peek();
                     } else {
                         tokenPila = Token.ERROR;
-                        cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
-                        i++;
-                        tokensRecorridos++;
                     }
                     break;
 
@@ -428,9 +382,6 @@ public class IdentSintactico {
                         tokenPila = listaSintax.get(j).getListaToken().peek();
                     } else {
                         tokenPila = Token.ERROR;
-                        cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
-                        i++;
-                        tokensRecorridos++;
                     }
                     break;
 
@@ -451,9 +402,6 @@ public class IdentSintactico {
                         tokenPila = listaSintax.get(j).getListaToken().peek();
                     } else {
                         tokenPila = Token.ERROR;
-                        cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
-                        i++;
-                        tokensRecorridos++;
                     }
                     break;
 
@@ -474,9 +422,9 @@ public class IdentSintactico {
                         tokenPila = listaSintax.get(j).getListaToken().peek();
                     } else {
                         tokenPila = Token.ERROR;
-                        cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
-                        i++;
-                        tokensRecorridos++;
+//                        cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
+//                        i++;
+//                        tokensRecorridos++;
                     }
                     break;
 
@@ -487,27 +435,31 @@ public class IdentSintactico {
                         cadenaSintaxis = contatenarString(cadenaSintaxis, nombreVar);
                         listaSintax.get(j).getListaToken().pop();
                         i++;
-                        if (listaSintax.get(j).getListaToken().empty()) {
-                            listaSintax.clear();
-                            listaSintax.add(new MiPila());
-                            listaSintax.get((0)).setPosicionPuntero(0);
-                            listaSintax.get((0)).getListaToken().push(Token.S1);
-                            System.out.println("Es un error: " + cadenaSintaxis);
-                            textoTemporal = "";
-                            cadenaSintaxis = "";
-                            tokensRecorridos = 0;
-                            tokenPila = Token.S1;
-                        }
+                        listaSintax.clear();
+                        listaSintax.add(new MiPila());
+                        listaSintax.get((0)).setPosicionPuntero(0);
+                        listaSintax.get((0)).getListaToken().push(Token.S1);
+                        tokenPila = Token.S1;
+
                     } else {
                         i++;
                         tokenPila = Token.ERROR;
-                        cadenaSintaxis = contatenarString(cadenaSintaxis, listaLexemas.get(i).getNombre());
+                        cadenaSintaxis = contatenarString(cadenaSintaxis, listaLexemas.get(i).getNombre() + " ERROR");
+                        columna = listaLexemas.get(i).getColumna();
+                        fila = listaLexemas.get(i).getFila();
+                        listaSintaxis.add(new SitaxisId(cadenaSintaxis, fila, columna));
+                        System.out.println("Es un error: " + cadenaSintaxis);
+                        textoTemporal = "";
+                        cadenaSintaxis = "";
+                        tokensRecorridos = 0;
+                        columna = 0;
+                        fila = 0;
                         tokensRecorridos++;
                     }
                     break;
             }
         }
-return listaSintaxis;
+        return listaSintaxis;
     }
 
     private void literal() {

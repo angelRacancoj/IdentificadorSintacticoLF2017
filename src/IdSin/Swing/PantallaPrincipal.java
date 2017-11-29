@@ -86,7 +86,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
         jMenuItem1.setText("jMenuItem1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Analizador");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -111,6 +111,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
         workTextArea.setColumns(20);
         workTextArea.setRows(5);
+        workTextArea.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                workTextAreaKeyPressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(workTextArea);
 
         jLabel1.setText("Analisis Lexico");
@@ -282,6 +287,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         try {
             String nombre = "";
             JFileChooser file = new JFileChooser();
+            file.setDialogTitle("Guardar");
             file.showSaveDialog(this);
             File guarda = file.getSelectedFile();
 
@@ -306,6 +312,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             if (path.replace(" ", "").isEmpty()) {
                 String nombre = "";
                 JFileChooser file = new JFileChooser();
+                file.setDialogTitle("Guardar");
                 file.showSaveDialog(this);
                 File guarda = file.getSelectedFile();
 
@@ -364,11 +371,16 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_nuevoMenuItemActionPerformed
 
+    private void workTextAreaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_workTextAreaKeyPressed
+        evaluarLexemas(workTextArea.getText());
+        actualizarListaObservable(listaLexemasAux);
+    }//GEN-LAST:event_workTextAreaKeyPressed
+
     public void actualizarListaObservable(List<Lexema> listaLexe) {
         this.listaObservableLexemas.clear();
         this.listaObservableLexemas.addAll(listaLexe);
     }
-    
+
     public void actualizarListaObservableSintaxis(List<SintaxisCorrecta.SitaxisId> listaLexe) {
         this.listaObservableSintaxis.clear();
         this.listaObservableSintaxis.addAll(listaLexe);
@@ -458,8 +470,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-        
-        
+
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
@@ -497,6 +508,5 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     public void setListaObservableSintaxis(ObservableList<SitaxisId> listaObservableSintaxis) {
         this.listaObservableSintaxis = listaObservableSintaxis;
     }
-    
-    
+
 }
